@@ -23,7 +23,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
     //return res.status(300).json({message: "Yet to be implemented"});
     const isbn = req.params.isbn;
     let filtered_books = books.filter((book) => book.isbn === isbn);
-    res.send(JSON.stringify({filtered_books},null,4);
+    res.send(JSON.stringify({filtered_books},null,4));
  });
   
 // Get book details based on author
