@@ -24,7 +24,7 @@ public_users.get('/isbn/:isbn',function (req, res) {
     if(req.params.isbn) {
         const isbn = req.params.isbn;
         let filtered_books = Object.values(books).filter((book) => book.isbn === isbn);
-        res.send(filtered_users);
+        res.send(filtered_books);
     } else {
         return res.status(300).json({message: "Error! ISBN not found"});
     }
