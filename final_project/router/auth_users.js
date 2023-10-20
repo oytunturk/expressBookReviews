@@ -66,4 +66,3 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
-module.exports.users = users;
