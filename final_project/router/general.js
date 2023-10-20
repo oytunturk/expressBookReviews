@@ -21,9 +21,8 @@ public_users.get('/',function (req, res) {
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
     //return res.status(300).json({message: "Yet to be implemented"});
-    const isbn = req.params.isbn;
-    if(isbn) {
-        res.send(books[isbn]);
+    if(req.body.isbn) {
+        res.send(books[req.body.isbn]);
     } else {
         return res.status(300).json({message: "Error! ISBN not found"});
     }
