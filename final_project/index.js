@@ -6,10 +6,34 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
+let users = []
+
+const doesExist = (username)=>{
+    let userswithsamename = users.filter((user)=>{
+      return user.username === username
+    });
+    if(userswithsamename.length > 0){
+      return true;
+    } else {
+      return false;
+    }
+}
+
+  const authenticatedUser = (username,password)=>{
+    let validusers = users.filter((user)=>{
+      return (user.username === username && user.password === password)
+    });
+    if(validusers.length > 0){
+      return true;
+    } else {
+      return false;
+    }
+}
+
 app.use(express.json());
 
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
-
+ 
 app.use("/customer/auth/*", function auth(req,res,next){
     //Write the authenication mechanism here
     if(req.session.authorization) {
