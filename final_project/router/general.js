@@ -21,8 +21,10 @@ public_users.get('/',function (req, res) {
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
     //return res.status(300).json({message: "Yet to be implemented"});
-    if(req.body.isbn) {
-        res.send(books[req.body.isbn]);
+    if(req.params.isbn) {
+        const isbn = req.params.isbn;
+        let filtered_books = Object.values(books).filter((book) => book.isbn === isbn);
+        res.send(filtered_users);
     } else {
         return res.status(300).json({message: "Error! ISBN not found"});
     }
