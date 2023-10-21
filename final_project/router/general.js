@@ -4,27 +4,17 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
-const doesExist = (username)=>{
-    let userswithsamename = users.filter((user)=>{
-      return user.username === username
-    });
-    if(userswithsamename.length > 0){
-      return true;
-    } else {
-      return false;
-    }
-  }
+public_users.use(express.json());
 
 public_users.post("/register", (req,res) => {
     //Write your code here
-    //return res.status(300).json({message: "Yet to be implemented"});
     const username = req.body.username;
     const password = req.body.password;
     if (!username || !password) {
         res.status(422).json({ error: "Please include username and password in your POST request"})
     }
     if (username && password) {
-      if (!doesExist(username)) {
+      if (!isValid(username)) {
         users.push({"username":username,"password":password});
         return res.status(200).json({message: "User successfully registred. Now you can login"});
       } else {
@@ -87,4 +77,3 @@ public_users.get('/review/:isbn',function (req, res) {
   });
 
 module.exports.general = public_users;
-module.exports.doesExist = doesExist;
