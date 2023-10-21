@@ -20,22 +20,22 @@ const authenticatedUser = (username,password)=>{
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
  
 app.use("/customer/auth/*", function auth(req,res,next){
-    //Write the authenication mechanism here
-    if(req.session.authorization) {
-        token = req.session.authorization['accessToken'];
+    let token = req.session.authorization;
+    if(token) {
+        token = token['accessToken'];
         jwt.verify(token, "access",(err,user)=>{
             if(!err){
                 req.user = user;
                 next();
             }
             else{
-                return res.status(403).json({message: "User not authenticated"})
+                return res.status(403).json({message: "Customer not authenticated"})
             }
-        });
-    } else {
-        return res.status(403).json({message: "User not logged in"})
-    }
-});
+         });
+     } else {
+         return res.status(403).json({message: "Customer not logged in"})
+     }
+ });
 
 const PORT =5000;
 
