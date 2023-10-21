@@ -4,6 +4,8 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+public_users.use(express.json());
+
 const doesExist = (username)=>{
     let userswithsamename = users.filter((user)=>{
       return user.username === username
