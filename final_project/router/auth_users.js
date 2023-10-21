@@ -7,8 +7,8 @@ let users = [];
 
 const isValid = (username)=>{ //returns boolean
     //write code to check is the username is valid
-    for(var i=0; i<regd_users.length; i++) {
-        if(regd_users[i].username==username) { 
+    for(var i=0; i<users.length; i++) {
+        if(users[i].username==username) { 
             return true; 
         }
     }
@@ -17,9 +17,9 @@ const isValid = (username)=>{ //returns boolean
 
 const getPassword = (username)=>{ //returns string
     //returns password of a registered user
-    for(var i=0; i<regd_users.length; i++) {
-        if(regd_users[i].username==username) { 
-            return regd_users[i].password; 
+    for(var i=0; i<users.length; i++) {
+        if(users[i].username==username) { 
+            return users[i].password; 
         }
     }
     return "";
@@ -59,10 +59,29 @@ regd_users.post("/login", (req,res) => {
 }});
 
 // Add a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
+//regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
-});
+//  return res.status(300).json({message: "Yet to be implemented"});
+//});
 
-module.exports.authenticated = regd_users;
-module.exports.isValid = isValid;
+regd_users.put("/auth/review/:isbn", (req, res) => {
+
+    const isbn = req.params.isbn;
+    let filtered_book = books[isbn]
+    if (filtered_book) {
+        let review = req.query.review;
+        let reviewer = req.session.authorization['username'];
+        if(review) {
+            filtered_book['reviews'][reviewer] = review;
+            books[isbn] = filtered_book;
+        }
+        res.send(`The review for the book with ISBN  ${isbn} has been added/updated.`);
+    }
+    else{
+        res.send("Unable to find this ISBN!");
+    }
+  });
+
+  module.exports.authenticated = regd_users;
+  module.exports.isValid = isValid;
+  module.exports.users = users;

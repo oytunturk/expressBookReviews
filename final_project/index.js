@@ -8,7 +8,7 @@ let doesExist = require("./router/general.js").doesExist;
 const app = express();
 
 const authenticatedUser = (username,password)=>{
-    let validusers = users.filter((user)=>{
+    let validusers = auth_users.filter((user)=>{
       return (user.username === username && user.password === password)
     });
     if(validusers.length > 0){
